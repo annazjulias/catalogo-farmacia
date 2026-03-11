@@ -9,6 +9,8 @@ function showPage(id, el) {
   document.getElementById(id).classList.add('visible');
   el.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Reseta filtro ao voltar para o catálogo
+  if (id === 'p1' && typeof resetFilter === 'function') resetFilter();
   return false;
 }
 

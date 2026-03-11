@@ -296,6 +296,14 @@ max-width: 80%;
 }
 .btn-share:active { background: var(--cream); }
 
+/* Imagem dentro do modal (diferente do card) */
+.modal-product-img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
 /* ── EMPTY STATE ── */
 .empty-state {
   text-align: center;

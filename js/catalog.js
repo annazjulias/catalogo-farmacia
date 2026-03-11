@@ -28,7 +28,7 @@ function buildCard(p) {
   if (p.featured) {
     return `
       <div class="product-card featured" data-category="${p.grupo}" ${clickAttr}>
-        <img class="product-img" src=${p.photo}>
+        <img class="product-img" src="${p.photo}" alt="${p.name}">
         <div class="product-info">
           <div class="product-cat">Destaque da semana</div>
           <div class="product-name">${p.name}</div>
@@ -44,7 +44,7 @@ function buildCard(p) {
 
   return `
     <div class="product-card" data-category="${p.grupo}" ${clickAttr}>
-      <img class="product-img" src=${p.photo}>
+      <img class="product-img" src="${p.photo}" alt="${p.name}">
       <div class="product-info">
         <div class="product-cat">${p.categoryLabel}</div>
         <div class="product-name">${p.name}</div>
@@ -73,32 +73,29 @@ function renderGrid(products) {
 
   grid.innerHTML = products.map(buildCard).join('');
 }
-function renderVultPromocao(products) {
-  const container = document.querySelector('.vult-promoçao');
-  if (!container) return;
-
-  // filtra só os produtos da marca Vult
-  const vultProducts = products.filter(product => product.marca === "Vult");
-
-  if (vultProducts.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <span style="font-size:36px">💄</span>
-        <p>Nenhum produto Vult disponível no momento.</p>
-      </div>`;
-    return;
-  }
-
-  container.innerHTML = vultProducts.map(buildCard).join('');
-}
-
 async function initCatalog() {
+  const grid = document.getElementById('product-grid');
+  if (grid) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:span 2;opacity:0.5">
+        <span style="font-size:36px">⏳</span>
+        <p>Carregando produtos...</p>
+      </div>`;
+  }
   try {
     const res = await fetch('./data/products.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     allProducts = await res.json();
     renderGrid(allProducts);
   } catch (e) {
     console.error('Erro ao carregar produtos:', e);
+    if (grid) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column:span 2">
+          <span style="font-size:36px">😕</span>
+          <p>Não foi possível carregar os produtos. Tente novamente.</p>
+        </div>`;
+    }
   }
 }
 

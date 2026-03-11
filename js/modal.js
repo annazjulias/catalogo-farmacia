@@ -11,7 +11,9 @@ function openModal(product) {
   const overlay = document.getElementById('modal-overlay');
 
   // Preenche conteúdo
-  document.getElementById('modal-img').src = product.photo;  
+  const modalImg = document.getElementById('modal-img');
+  modalImg.src = product.photo;
+  modalImg.alt = product.name;
   document.getElementById('modal-cat').textContent = product.categoryLabel;
   document.getElementById('modal-name').textContent = product.name;
   document.getElementById('modal-desc').textContent = product.desc;

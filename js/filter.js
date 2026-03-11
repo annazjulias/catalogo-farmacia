@@ -10,7 +10,16 @@ const CATEGORY_MAP = {
   'Boca': 'Boca',
   'Olhos': 'Olhos',
   'Acessórios': 'Acessórios',
+  'Maquiagem': 'Maquiagem',
 };
+
+function resetFilter() {
+  const tags = document.querySelectorAll('.cat-tag');
+  tags.forEach(t => t.classList.remove('active'));
+  const todosTag = document.querySelector('.cat-tag[data-filter="todos"]');
+  if (todosTag) todosTag.classList.add('active');
+  renderGrid(allProducts);
+}
 
 function initFilter() {
   const tags = document.querySelectorAll('.cat-tag');
