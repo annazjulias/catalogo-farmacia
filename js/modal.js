@@ -11,7 +11,7 @@ function openModal(product) {
   const overlay = document.getElementById('modal-overlay');
 
   // Preenche conteúdo
-  document.getElementById('modal-emoji').innerHTML = product.emoji;
+  document.getElementById('modal-img').src = product.photo;  
   document.getElementById('modal-cat').textContent = product.categoryLabel;
   document.getElementById('modal-name').textContent = product.name;
   document.getElementById('modal-desc').textContent = product.desc;
@@ -55,7 +55,7 @@ function closeModal() {
 function buildWhatsAppMessage(p) {
   return (
     `Olá! Tenho interesse em um produto do catálogo 💄\n\n` +
-    `🛍 Cód: #${String(p.id).padStart(3, '0')}\n` +
+    `🛍 Cód: #${String(p.ean).padStart(3, '0')}\n` +
     `📦 Produto: ${p.name}\n` +
     `💰 Preço: ${formatPrice(p.price)}\n\n`
   );

@@ -3,18 +3,23 @@
    do arquivo data/products.json
 ═══════════════════════════════════════ */
 
-const WHATSAPP_NUMBER = '5535997681024'; // ← Altere aqui
+const WHATSAPP_NUMBER = '553535211122';
 
 let allProducts = [];
 
-/** Formata número para BRL */
-function formatPrice(n) {
-  return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+function formatPrice(n){
+
+  if(n === null || n === undefined)
+  return "R$ --";
+
+  return Number(n).toLocaleString('pt-BR',{
+    style:'currency',
+    currency:'BRL'
+  });
+
 }
 
-/** Gera o HTML de um product-card */
 function buildCard(p) {
-  // Salva produto no window indexado pelo id para o modal acessar
   window.__products = window.__products || {};
   window.__products[p.id] = p;
 
@@ -22,12 +27,12 @@ function buildCard(p) {
 
   if (p.featured) {
     return `
-      <div class="product-card featured" data-category="${p.category}" ${clickAttr}>
-        <div class="product-img">${p.emoji}</div>
+      <div class="product-card featured" data-category="${p.grupo}" ${clickAttr}>
+        <img class="product-img" src=${p.photo}>
         <div class="product-info">
           <div class="product-cat">Destaque da semana</div>
           <div class="product-name">${p.name}</div>
-          <div class="product-desc">${p.desc}</div>
+          <div class="product-desc">${p.marca}</div>
           <div class="product-price-row">
             <div class="product-price">${formatPrice(p.price)}</div>
             ${p.oldPrice ? `<div class="product-old">${formatPrice(p.oldPrice)}</div>` : ''}
@@ -38,12 +43,12 @@ function buildCard(p) {
   }
 
   return `
-    <div class="product-card" data-category="${p.category}" ${clickAttr}>
-      <div class="product-img">${p.emoji}</div>
+    <div class="product-card" data-category="${p.grupo}" ${clickAttr}>
+      <img class="product-img" src=${p.photo}>
       <div class="product-info">
         <div class="product-cat">${p.categoryLabel}</div>
         <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
+        <div class="product-desc">${p.marca}</div>
         <div class="product-price-row">
           <div class="product-price">${formatPrice(p.price)}</div>
           ${p.oldPrice ? `<div class="product-old">${formatPrice(p.oldPrice)}</div>` : ''}
@@ -53,7 +58,6 @@ function buildCard(p) {
     </div>`;
 }
 
-/** Renderiza grid com os produtos filtrados */
 function renderGrid(products) {
   const grid = document.getElementById('product-grid');
   if (!grid) return;
@@ -69,8 +73,25 @@ function renderGrid(products) {
 
   grid.innerHTML = products.map(buildCard).join('');
 }
+function renderVultPromocao(products) {
+  const container = document.querySelector('.vult-promoçao');
+  if (!container) return;
 
-/** Inicializa — busca o JSON e monta a página */
+  // filtra só os produtos da marca Vult
+  const vultProducts = products.filter(product => product.marca === "Vult");
+
+  if (vultProducts.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <span style="font-size:36px">💄</span>
+        <p>Nenhum produto Vult disponível no momento.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = vultProducts.map(buildCard).join('');
+}
+
 async function initCatalog() {
   try {
     const res = await fetch('./data/products.json');

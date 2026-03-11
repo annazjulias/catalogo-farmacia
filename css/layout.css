@@ -141,8 +141,8 @@ section:nth-child(even) { background: var(--cream); }
 
 /* ── FOOTER ── */
 footer {
-  background: #7A0010;
-  color: rgba(255,255,255,0.6);
+    background: var(--grad-hero);
+  color: #fff;
   text-align: center;
   padding: 28px 20px;
   font-size: 11px;

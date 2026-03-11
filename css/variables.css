@@ -5,9 +5,10 @@
 
 :root {
   /* Paleta principal */
+  
   --rose:    #F4A8A8;
   --blush:   #FDDADA;
-  --gold:    #CC2929;
+  --gold:    #3b3434;
   --burg:    #C0001A;
   --deep:    #7A0010;
   --cream:   #FFF5F5;
@@ -56,7 +57,7 @@
   --max-width: 430px;
 
   /* WhatsApp */
-  --whatsapp-number: "5535997681024";
+  --whatsapp-number: "553535211122";
   --whatsapp-msg-catalogo: "Olá! Vi o catálogo e quero saber mais sobre os produtos! 💄";
   --whatsapp-msg-promo: "Olá! Vi as promoções da Semana da Maquiagem e quero fazer um pedido! 🌸";
 }

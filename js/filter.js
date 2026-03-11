@@ -5,13 +5,11 @@
 
 /** Mapa: texto do botão → valor de data-category */
 const CATEGORY_MAP = {
-  'todos': null,       // null = mostrar tudo
-  'batom': 'batom',
-  'base': 'base',
-  'olhos': 'olhos',
-  'blush': 'blush',
-  'iluminador': 'iluminador',
-  'acessorios': 'acessorios',
+  'todos': null,
+  'Rosto': 'Rosto',
+  'Boca': 'Boca',
+  'Olhos': 'Olhos',
+  'Acessórios': 'Acessórios',
 };
 
 function initFilter() {
@@ -28,10 +26,9 @@ function initFilter() {
       const cat = CATEGORY_MAP[key] ?? null;
 
       // Filtra e renderiza
-      const filtered = cat
-        ? allProducts.filter(p => p.category === cat)
-        : allProducts;
-
+     const filtered = cat
+  ? allProducts.filter(p => p.grupo === cat)
+  : allProducts;
       renderGrid(filtered);
     });
   });
